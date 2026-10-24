@@ -1,0 +1,19 @@
+# ====== Data files ======
+data/*
+!data/README.md
+
+# ====== macOS ======
+.DS_Store
+.DS_Store?
+._*
+
+# ====== Python cache ======
+__pycache__/
+*.pyc
+
+# ====== R / RStudio ======
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
