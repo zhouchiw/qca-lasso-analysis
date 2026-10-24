@@ -3,16 +3,18 @@
 ## Overview
 This project investigates whether quantitative coronary angiography (QCA)-derived and clinical features can be used to identify functionally significant coronary stenosis, using fractional flow reserve (FFR) as the reference standard. A LASSO logistic regression model was developed to select predictors and evaluate diagnostic performance at both the vessel and patient levels.
 
-The repository contains a **reproducible R re-implementation** of an earlier analysis presented at SHEC 2024, and the corresponding [historical poster](Poster_SHEC2024_original.pdf) is preserved in this repository. While reconstructing the analysis pipeline, several aspects of the original workflow were refined, particularly patient-level data handling, development/test separation, cross-validation, model selection, and evaluation. These changes were intended to make the analysis more transparent, rigorous, and methodologically robust, rather than to replace the original study. Importantly, the updated analysis retained substantial overlap with the original findings, including several of the same predictors selected by LASSO and the model's similar diagnostic performance.
+The repository contains a **reproducible R re-implementation** of an earlier analysis presented at SHEC 2024, and the corresponding [historical poster](Poster_SHEC2024_original.pdf) is preserved in this repository. 
+
+> **Repository note:** During reconstruction of the analysis pipeline, several methodological aspects were refined, particularly patient-level data handling, development/test separation, cross-validation and evaluation. The repository represents a cleaned, reorganized, and methodologically strengthened version of the original workflow rather than a verbatim archival copy. The updated analysis produced broadly consistent findings, including overlap in LASSO-selected predictors and similar diagnostic performance.
 
 ## Dataset
-The dataset contains **303 coronary vessel observations from 220 patients**. Each observation represents an individual vessel and includes QCA-derived anatomical and hemodynamic measurements together with selected clinical variables.
+The dataset contains **39 QCA-derived, clinical, and demographic features** from **303 coronary vessel observations from 220 patients**. Each observation represents an individual vessel and includes QCA-derived anatomical and hemodynamic measurements together with selected clinical variables.
 
 At the vessel level, functionally significant stenosis is defined as FFR <= 0.80. For patient-level evaluation, a patient is considered positive if at least one of their evaluated vessels is positive.
 
 ## Analysis Pipeline
 
-The [`src/r/`](src/r/). directory contains the complete R analysis pipeline.
+The [`src/r/`](src/r/) directory contains the complete R analysis pipeline.
 
 | Script | Purpose |
 | --- | --- |
