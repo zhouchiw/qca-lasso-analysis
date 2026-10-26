@@ -43,7 +43,7 @@ The final `lambda.1se` LASSO model retained five predictors:
 - stenotic flow reserve (SFR)
 - family history of CAD
 
-Several of these predictors were also identified in the original analysis, showing substantial consistency despite the revised data-handling and evalution workflow.
+Several of these predictors were also identified in the original analysis, showing substantial consistency despite the revised data-handling and evaluation workflow.
 
 ### Held-out test performance
 
