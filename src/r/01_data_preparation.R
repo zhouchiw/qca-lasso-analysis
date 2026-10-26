@@ -67,29 +67,21 @@ patient_summary <- vessel_data %>%
   )
 
 # validation
-
-stopifnot(
-  all(
-    patient_summary$patient_label ==
-      as.integer(patient_summary$min_ffr <= 0.80)
-  )
-)
+stopifnot(all(patient_summary$patient_label == as.integer(patient_summary$min_ffr <= 0.80)))
 
 ### Data development/test split
 
 # Split patient rather than split vessel to prevent patient-level data leakage)
 set.seed(100)
 development_index <- createDataPartition(
-  factor(patient_summary$patient_label),
-  p = 0.80,
-  list = FALSE
+  factor(patient_summary$patient_label), p = 0.80, list = FALSE
 )
 
 development_index <- as.vector(development_index)
 development_patient_ids <- patient_summary$patient_id[development_index]
 test_patient_ids <- patient_summary$patient_id[-development_index]
 
-# Create vessel-level development and test datasets
+# Create vessel-level development and test sets
 
 development_set <- vessel_data %>%
   filter(patient_id %in% development_patient_ids)
@@ -100,7 +92,5 @@ test_set <- vessel_data %>%
 # Split summary
 
 cat("\nDevelopment/test split\n")
-cat("Development set:", nrow(development_set),"vessels from", 
-  n_distinct(development_set$patient_id),"patients\n")
-cat("Test set:", nrow(test_set),"vessels from",
-  n_distinct(test_set$patient_id),"patients\n")
+cat("Development set:", nrow(development_set),"vessels from", n_distinct(development_set$patient_id),"patients\n")
+cat("Test set:", nrow(test_set),"vessels from", n_distinct(test_set$patient_id),"patients\n")

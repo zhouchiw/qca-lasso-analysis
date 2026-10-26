@@ -51,8 +51,7 @@ feature_vars <- c(
 ### LASSO input
 
 x_development <- as.matrix(
-  development_set %>%
-    select(all_of(feature_vars))
+  development_set %>% select(all_of(feature_vars))
 )
 
 y_development <- development_set$label
@@ -69,6 +68,9 @@ patient_folds <- createFolds(
   list = TRUE,
   returnTrain = FALSE
 )
+
+## Idea: first assign folds to patient rows, store the assignment results in a new column [folder_id], 
+## then transfer patient assignments back to vessel rows
 
 # Assign each patient to one fold
 development_patients$fold_id <- NA_integer_
@@ -109,7 +111,7 @@ cat("lambda.1se:", lambda_1se, "\n")
 ### Fit LASSO coefficient paths
 
 lasso_path <- glmnet(
-  x = x_development,
+  x = x_development, 
   y = y_development,
   family = "binomial",
   alpha = 1,
@@ -155,16 +157,10 @@ coefficient_table_1se <- data.frame(
 )
 
 selected_features_min <- coefficient_table_min %>%
-  filter(
-    feature != "(Intercept)",
-    coefficient != 0
-  )
+  filter(feature != "(Intercept)", coefficient != 0)
 
 selected_features_1se <- coefficient_table_1se %>%
-  filter(
-    feature != "(Intercept)",
-    coefficient != 0
-  )
+  filter(feature != "(Intercept)", coefficient != 0)
 
 cat("\nSelected features using lambda.min:\n")
 print(selected_features_min)
@@ -182,39 +178,21 @@ final_selected_features <- selected_features_1se
 ### Generate development/test predictions
 
 x_test <- as.matrix(
-  test_set %>%
-    select(all_of(feature_vars))
+  test_set %>% select(all_of(feature_vars))
 )
 
 development_set$predicted_prob <- as.numeric(
-  predict(
-    final_model,
-    newx = x_development,
-    type = "response"
-  )
+  predict(final_model, newx = x_development, type = "response")
 )
 
 test_set$predicted_prob <- as.numeric(
-  predict(
-    final_model,
-    newx = x_test,
-    type = "response"
-  )
+  predict(final_model, newx = x_test, type = "response")
 )
 
 ### Save outputs
 
-dir.create(
-  "outputs/r/figures",
-  recursive = TRUE,
-  showWarnings = FALSE
-)
-
-dir.create(
-  "outputs/r/tables",
-  recursive = TRUE,
-  showWarnings = FALSE
-)
+dir.create("outputs/r/figures", recursive = TRUE, showWarnings = FALSE)
+dir.create("outputs/r/tables", recursive = TRUE, showWarnings = FALSE)
 
 write.csv(
   coefficient_table_min,
